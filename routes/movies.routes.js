@@ -36,6 +36,31 @@ router.post('/:id/delete', async (req, res, next)=>{
     }
 });
 
+router.get('/:id/edit', async (req, res, next)=>{
+    const id = req.params.id;
+    try {
+        const movie = await Movie.findById(id);
+        const actors = await Celebrity.find();
+        res.render('movies/edit-movie', {movie, actorOptions: actors})
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.post('/:id', async (req, res, next)=>{
+    const id = req.params.id;
+    if (!isValidObjectId(id)) return next();
+
+    const movie = {...req.body};
+
+    try {
+        await Movie.findByIdAndUpdate(id, movie);
+        res.redirect('/movies');
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.get('/create', async (req, res, next)=>{
     try {
         const actors = await Celebrity.find();

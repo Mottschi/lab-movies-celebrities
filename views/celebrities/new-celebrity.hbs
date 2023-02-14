@@ -14,12 +14,7 @@
     </div>
     <div>
         <label for="occupation">Occupation:</label>
-        <select name="occupation" id="celebrity-occupation-input">
-            <option selected disabled value="-1">Pick an Occupation</option>
-            {{#each occupationOptions}}
-            <option value="{{this}}">{{this}}</option>
-            {{/each}}
-        </select>
+        <input type="text" name="occupation" id="celebrity-occupation-input">
     </div>
     <div>
         <label for="catchphrase">Catchphrase:</label>
