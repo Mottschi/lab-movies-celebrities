@@ -1,26 +1,19 @@
 <h2>Add a Movie to the database</h2>
 
-{{#if error}}
-<div class="warning">
-    <p>An error has occurred: {{error.message}}</p>
-    <p>Please correct the issue and then try to save your entry again.</p>
-</div>
-{{/if}}
-
 <form action="" method="POST">
     <div>
         <label for="title">Title:</label>
-        <input type="text" name="title" id="movie-title-input" {{#if movie}}value="{{movie.title}}"{{/if}}>
+        <input type="text" name="title" id="movie-title-input">
     </div>
 
     <div>
         <label for="genre">Genre:</label>
-        <input type="text" name="genre" id="movie-genre-input" {{#if movie}}value="{{movie.genre}}"{{/if}}>
+        <input type="text" name="genre" id="movie-genre-input">
     </div>
 
     <div>
         <label for="plot">Plot:</label>
-        <input type="text" name="plot" id="movie-plot-input" {{#if movie}}value="{{movie.plot}}"{{/if}}>
+        <input type="text" name="plot" id="movie-plot-input">
     </div>
     <div>
         <label for="cast">Actors:</label>
