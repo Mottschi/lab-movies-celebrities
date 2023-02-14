@@ -26,7 +26,7 @@
         <label for="cast">Actors:</label>
         <select name="cast" id="movie-actor-input" multiple>
             {{#each actorOptions}}
-            <option value="{{_id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+            <option value="{{_id}}" {{#includes ../movie.cast _id}}selected{{/includes}}>{{name}}</option>
             {{/each}}
         </select>
     </div>

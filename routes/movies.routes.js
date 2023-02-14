@@ -40,25 +40,9 @@ router.get('/:id/edit', async (req, res, next)=>{
     const id = req.params.id;
     try {
         const movie = await Movie.findById(id);
-        const knownActors = movie.cast;
         const actors = await Celebrity.find();
 
-        // To be able to set involved actors to selected, need to 
-        // compare each actor to the actors involved in the movie
-        // setting a new 'selected' property to true for the ones
-        // that are currently set for the movie
-        const mappedActors = actors.map((actor)=>{
-            const {name, occupation, catchphrase, _id} = actor;
-            const newActor = {name, occupation, catchphrase, _id}
-            knownActors.forEach((knownActorId) => {
-                if (knownActorId.equals(newActor._id)) {
-                    newActor.selected = true;
-                }
-            })
-            return newActor;
-        })
-
-        res.render('movies/edit-movie', {movie, actorOptions: mappedActors})
+        res.render('movies/edit-movie', {movie, actorOptions: actors})
     } catch (error) {
         next(error);
     }
@@ -71,7 +55,8 @@ router.post('/:id', async (req, res, next)=>{
     const movie = {genre: req.body.genre, plot: req.body.plot, cast: req.body.cast};
 
     // Preventing updates that remove the title completely
-    // (title is required, but an empty string is technically accepted)
+    // (title is required, but an empty string is technically accepted,
+    // when it shouldn't be)
     if (req.body.title.length > 0) movie.title = req.body.title;
 
     try {

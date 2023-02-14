@@ -13,6 +13,15 @@ const express = require('express');
 // https://www.npmjs.com/package/hbs
 const hbs = require('hbs');
 
+// custom handlebars helper checks whether a given object id is included
+// in an array of object ids
+// executes the first block after the includes if the id is included, otherwise
+// executes the second block
+hbs.registerHelper('includes', (array, id, options) => {
+    if (array.some((elem) => elem.equals(id))) return options.fn();
+    return options.inverse();
+})
+
 const app = express();
 
 // ℹ️ This function is getting exported from the config folder. It runs most middlewares
