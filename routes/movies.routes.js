@@ -69,9 +69,10 @@ router.post('/:id', async (req, res, next)=>{
     if (!isValidObjectId(id)) return next();
 
     const movie = {genre: req.body.genre, plot: req.body.plot, cast: req.body.cast};
+
+    // Preventing updates that remove the title completely
+    // (title is required, but an empty string is technically accepted)
     if (req.body.title.length > 0) movie.title = req.body.title;
-    // if (req.body.genre.length > 0) movie.genre = req.body.genre;
-    // if (req.body.plot.length > 0) movie.plot = req.body.plot;
 
     try {
         await Movie.findByIdAndUpdate(id, movie);
