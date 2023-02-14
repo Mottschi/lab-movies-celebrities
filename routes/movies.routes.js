@@ -2,6 +2,7 @@
 const router = require("express").Router();
 const Celebrity = require("../models/Celebrity.model");
 const Movie = require('../models/Movie.model')
+const { isValidObjectId } = require('mongoose')
 
 // all your routes here
 router.get('/', async (req, res, next)=>{
@@ -10,6 +11,27 @@ router.get('/', async (req, res, next)=>{
         res.render('movies/movies', {movies});
     } catch (error) {
         console.log(error);
+        next(error);
+    }
+});
+
+router.get('/:id', async (req, res, next)=>{
+    const id = req.params.id;
+    if (!isValidObjectId(id)) return next();
+    try {
+        const movie = await Movie.findById(id).populate('cast');
+        res.render('movies/movie-details', {movie});
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.post('/:id/delete', async (req, res, next)=>{
+    const id = req.params.id;
+    try {
+        await Movie.findByIdAndRemove(id);
+        res.redirect('/movies');
+    } catch (error) {
         next(error);
     }
 });
